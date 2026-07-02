@@ -7,11 +7,22 @@ interface AddItemFormProps {
   onItemAdded: () => void;
 }
 
+type Category = 'TRAVEL' | 'ADVENTURE' | 'LEARNING' | 'FOOD' | 'FITNESS' | 'CREATIVE' | 'OTHER';
+type Priority = 'LOW' | 'MEDIUM' | 'HIGH';
+
+interface FormData {
+  title: string;
+  description: string;
+  category: Category;
+  priority: Priority;
+  targetDate: string;
+}
+
 export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     title: '',
     description: '',
     category: 'OTHER',
@@ -27,16 +38,9 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
     try {
       await client.models.BucketItem.create({
         title: formData.title,
-        description: formData.description,
-        category: formData.category as
-          | 'TRAVEL'
-          | 'ADVENTURE'
-          | 'LEARNING'
-          | 'FOOD'
-          | 'FITNESS'
-          | 'CREATIVE'
-          | 'OTHER',
-        priority: formData.priority as 'LOW' | 'MEDIUM' | 'HIGH',
+        description: formData.description || null,
+        category: formData.category,
+        priority: formData.priority,
         targetDate: formData.targetDate || null,
         isCompleted: false,
       });
@@ -117,7 +121,9 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             </label>
             <select
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value as Category })
+              }
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
               <option value="TRAVEL">✈️ Travel</option>
@@ -136,12 +142,14 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             </label>
             <select
               value={formData.priority}
-              onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, priority: e.target.value as Priority })
+              }
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
-              <option value="LOW">🟢 Low</option>
-              <option value="MEDIUM">🟡 Medium</option>
-              <option value="HIGH">🔴 High</option>
+              <option value="LOW">Low</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HIGH">High</option>
             </select>
           </div>
         </div>
@@ -158,18 +166,18 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
           />
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 pt-2">
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+            className="flex-1 bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 disabled:opacity-50"
           >
-            {loading ? 'Adding...' : 'Add Item'}
+            {loading ? 'Saving...' : 'Create Item'}
           </button>
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-200 transition"
+            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
           >
             Cancel
           </button>

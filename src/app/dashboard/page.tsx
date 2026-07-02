@@ -22,17 +22,19 @@ type BucketItemType = {
   targetDate?: string | null;
 };
 
+type FilterType = 'ALL' | 'ACTIVE' | 'COMPLETED';
+
 export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [items, setItems] = useState<BucketItemType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [filter, setFilter] = useState<'ALL' | 'ACTIVE' | 'COMPLETED'>('ALL');
+  const [filter, setFilter] = useState<FilterType>('ALL');
 
   const fetchItems = useCallback(async (): Promise<void> => {
     try {
-      const result = await client.models.BucketItem.list();
-      setItems(result.data as BucketItemType[]);
+      const { data } = await client.models.BucketItem.list();
+      setItems(data as BucketItemType[]);
     } catch (err) {
       console.error('Error fetching items:', err);
     }
@@ -75,6 +77,7 @@ export default function DashboardPage() {
       <Navbar user={user ?? undefined} />
 
       <main className="max-w-2xl mx-auto px-4 py-8">
+
         {/* Progress bar */}
         <div className="bg-white rounded-2xl shadow-sm p-5 mb-6">
           <div className="flex justify-between items-center mb-2">
@@ -125,7 +128,11 @@ export default function DashboardPage() {
             </div>
           ) : (
             filteredItems.map((item) => (
-              <BucketItem key={item.id} item={item} onUpdate={fetchItems} />
+              <BucketItem
+                key={item.id}
+                item={item}
+                onUpdate={fetchItems}
+              />
             ))
           )}
         </div>

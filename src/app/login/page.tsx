@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { signIn, getCurrentUser } from 'aws-amplify/auth';
+import { useState } from 'react';
+import { signIn } from 'aws-amplify/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { configureAmplify, safeSignOut } from '@/src/lib/amplify';
+import { configureAmplify } from '@/src/lib/amplify';
 
 configureAmplify();
 
@@ -14,19 +14,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    const checkExistingSession = async (): Promise<void> => {
-      try {
-        await configureAmplify();
-        await getCurrentUser();
-        router.push('/dashboard');
-      } catch {
-        // Not logged in — stay on login page
-      }
-    };
-    checkExistingSession();
-  }, [router]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -38,14 +25,6 @@ export default function LoginPage() {
       router.push('/dashboard');
     } catch (err: unknown) {
       if (err instanceof Error) {
-        if (
-          err.message.includes('already a signed in user') ||
-          err.name === 'UserAlreadyAuthenticatedException'
-        ) {
-          await safeSignOut();
-          router.push('/login');
-          return;
-        }
         setError(err.message);
       } else {
         setError('Login failed');

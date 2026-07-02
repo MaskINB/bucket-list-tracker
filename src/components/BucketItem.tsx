@@ -119,11 +119,11 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
         <button
           onClick={handleDelete}
           disabled={loading}
-          className="text-gray-300 hover:text-red-400 transition text-xl flex-shrink-0"
+          className="text-gray-300 hover:text-red-400 transition text-xl shrink-0"
         >
           ×
         </button>
       </div>
     </div>
   );
-}
+}   
