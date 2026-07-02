@@ -95,6 +95,7 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
             alt={item.title}
             fill
             className="object-cover"
+            unoptimized
           />
           {item.isCompleted && (
             <div className="absolute inset-0 bg-green-500 bg-opacity-20 flex items-center justify-center">
@@ -111,7 +112,7 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
             <button
               onClick={toggleComplete}
               disabled={loading}
-              className={`mt-1 w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition ${
+              className={`mt-1 w-6 h-6 rounded-full border-2 shrink-0 flex items-center justify-center transition ${
                 item.isCompleted
                   ? "bg-green-500 border-green-500 text-white"
                   : "border-gray-300 hover:border-green-400"
@@ -159,7 +160,7 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
           <button
             onClick={handleDelete}
             disabled={loading}
-            className="text-gray-300 hover:text-red-400 transition text-xl flex-shrink-0"
+            className="text-gray-300 hover:text-red-400 transition text-xl shrink-0"
           >
             ×
           </button>
