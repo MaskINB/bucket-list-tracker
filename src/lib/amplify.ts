@@ -6,10 +6,16 @@ export async function configureAmplify(): Promise<void> {
   if (configured) return;
 
   try {
-    const outputs = await import('@/amplify_outputs.json');
+    // Try src/ folder first (production), then root (local dev)
+    let outputs;
+    try {
+      outputs = await import('@/amplify_outputs.json');
+    } catch {
+      outputs = await import('../../amplify_outputs.json');
+    }
     Amplify.configure(outputs.default, { ssr: true });
     configured = true;
   } catch {
-    console.warn('amplify_outputs.json not found yet — run npx ampx sandbox first');
+    console.warn('amplify_outputs.json not found');
   }
 }
