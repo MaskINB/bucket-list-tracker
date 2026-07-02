@@ -1,15 +1,19 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
 /*== STEP 1 ===============================================================
-The section below creates a Todo database table with a "content" field. Try
-adding a new "isDone" field as a boolean. The authorization rule below
-specifies that any unauthenticated user can "create", "read", "update", 
-and "delete" any "Todo" records.
+The section below creates a BucketItem table that matches the frontend UI.
+The authorization rule below specifies that any unauthenticated user can
+"create", "read", "update", and "delete" any "BucketItem" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
+  BucketItem: a
     .model({
-      content: a.string(),
+      title: a.string(),
+      description: a.string(),
+      category: a.string(),
+      isCompleted: a.boolean(),
+      priority: a.string(),
+      targetDate: a.string(),
     })
     .authorization((allow) => [allow.guest()]),
 });
@@ -48,6 +52,6 @@ Fetch records from the database and use them in your frontend component.
 
 /* For example, in a React component, you can use this snippet in your
   function's RETURN statement */
-// const { data: todos } = await client.models.Todo.list()
+// const { data: bucketItems } = await client.models.BucketItem.list()
 
-// return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>
+// return <ul>{bucketItems.map(item => <li key={item.id}>{item.title}</li>)}</ul>

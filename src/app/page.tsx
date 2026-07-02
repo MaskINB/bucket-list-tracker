@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCurrentUser } from 'aws-amplify/auth';
-import { configureAmplify } from '@/lib/amplify';
+import { configureAmplify } from '@/src/lib/amplify';
 
 configureAmplify();
 

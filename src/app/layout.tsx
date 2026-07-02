@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { configureAmplify } from '@/lib/amplify';
+import { configureAmplify } from '@/src/lib/amplify';
 import '@aws-amplify/ui-react/styles.css';
 import './globals.css';
 
