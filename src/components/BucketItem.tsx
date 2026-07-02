@@ -1,7 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { client } from '@/src/lib/dataClient';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { client } from "@/src/lib/dataClient";
+import { getUrl } from "aws-amplify/storage";
 
 interface BucketItemProps {
   item: {
@@ -12,28 +14,48 @@ interface BucketItemProps {
     isCompleted?: boolean | null;
     priority?: string | null;
     targetDate?: string | null;
+    imageKey?: string | null;
   };
   onUpdate: () => void;
 }
 
 const categoryEmoji: Record<string, string> = {
-  TRAVEL: '✈️',
-  ADVENTURE: '🏔️',
-  LEARNING: '📚',
-  FOOD: '🍜',
-  FITNESS: '💪',
-  CREATIVE: '🎨',
-  OTHER: '⭐',
+  TRAVEL: "✈️",
+  ADVENTURE: "🏔️",
+  LEARNING: "📚",
+  FOOD: "🍜",
+  FITNESS: "💪",
+  CREATIVE: "🎨",
+  OTHER: "⭐",
 };
 
 const priorityColor: Record<string, string> = {
-  LOW: 'bg-green-100 text-green-700',
-  MEDIUM: 'bg-yellow-100 text-yellow-700',
-  HIGH: 'bg-red-100 text-red-700',
+  LOW: "bg-green-100 text-green-700",
+  MEDIUM: "bg-yellow-100 text-yellow-700",
+  HIGH: "bg-red-100 text-red-700",
 };
 
 export default function BucketItem({ item, onUpdate }: BucketItemProps) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  // Load image from S3 if imageKey exists
+  useEffect(() => {
+    const loadImage = async () => {
+      if (item.imageKey) {
+        try {
+          const result = await getUrl({
+            path: item.imageKey,
+            options: { validateObjectExistence: false },
+          });
+          setImageUrl(result.url.toString());
+        } catch {
+          console.error("Failed to load image");
+        }
+      }
+    };
+    loadImage();
+  }, [item.imageKey]);
 
   const toggleComplete = async (): Promise<void> => {
     setLoading(true);
@@ -49,7 +71,7 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
   };
 
   const handleDelete = async (): Promise<void> => {
-    if (!confirm('Delete this item?')) return;
+    if (!confirm("Delete this item?")) return;
     setLoading(true);
     try {
       await client.models.BucketItem.delete({ id: item.id });
@@ -61,69 +83,88 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
 
   return (
     <div
-      className={`bg-white rounded-2xl shadow-sm border p-5 transition ${
-        item.isCompleted ? 'opacity-60' : ''
+      className={`bg-white rounded-2xl shadow-sm border overflow-hidden transition ${
+        item.isCompleted ? "opacity-60" : ""
       }`}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-start gap-3 flex-1">
-          {/* Complete toggle button */}
-          <button
-            onClick={toggleComplete}
-            disabled={loading}
-            className={`mt-1 w-6 h-6 rounded-full border-2 shrink-0 flex items-center justify-center transition ${
-              item.isCompleted
-                ? 'bg-green-500 border-green-500 text-white'
-                : 'border-gray-300 hover:border-green-400'
-            }`}
-          >
-            {item.isCompleted && '✓'}
-          </button>
+      {/* Item image if exists */}
+      {imageUrl && (
+        <div className="relative w-full h-48">
+          <Image
+            src={imageUrl}
+            alt={item.title}
+            fill
+            className="object-cover"
+          />
+          {item.isCompleted && (
+            <div className="absolute inset-0 bg-green-500 bg-opacity-20 flex items-center justify-center">
+              <span className="text-4xl">✅</span>
+            </div>
+          )}
+        </div>
+      )}
 
-          <div className="flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-lg">
-                {categoryEmoji[item.category ?? 'OTHER']}
-              </span>
-              <h3
-                className={`font-semibold text-gray-800 ${
-                  item.isCompleted ? 'line-through text-gray-400' : ''
-                }`}
-              >
-                {item.title}
-              </h3>
-              {item.priority && (
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                    priorityColor[item.priority]
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3 flex-1">
+            {/* Complete toggle */}
+            <button
+              onClick={toggleComplete}
+              disabled={loading}
+              className={`mt-1 w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition ${
+                item.isCompleted
+                  ? "bg-green-500 border-green-500 text-white"
+                  : "border-gray-300 hover:border-green-400"
+              }`}
+            >
+              {item.isCompleted && "✓"}
+            </button>
+
+            <div className="flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-lg">
+                  {categoryEmoji[item.category ?? "OTHER"]}
+                </span>
+                <h3
+                  className={`font-semibold text-gray-800 ${
+                    item.isCompleted ? "line-through text-gray-400" : ""
                   }`}
                 >
-                  {item.priority}
-                </span>
+                  {item.title}
+                </h3>
+                {item.priority && (
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                      priorityColor[item.priority]
+                    }`}
+                  >
+                    {item.priority}
+                  </span>
+                )}
+              </div>
+
+              {item.description && (
+                <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+              )}
+
+              {item.targetDate && (
+                <p className="text-xs text-gray-400 mt-2">
+                  🗓️ Target: {item.targetDate}
+                </p>
               )}
             </div>
-
-            {item.description && (
-              <p className="text-sm text-gray-500 mt-1">{item.description}</p>
-            )}
-
-            {item.targetDate && (
-              <p className="text-xs text-gray-400 mt-2">
-                🗓️ Target: {item.targetDate}
-              </p>
-            )}
           </div>
-        </div>
 
-        {/* Delete button */}
-        <button
-          onClick={handleDelete}
-          disabled={loading}
-          className="text-gray-300 hover:text-red-400 transition text-xl shrink-0"
-        >
-          ×
-        </button>
+          {/* Delete button */}
+          <button
+            onClick={handleDelete}
+            disabled={loading}
+            className="text-gray-300 hover:text-red-400 transition text-xl flex-shrink-0"
+          >
+            ×
+          </button>
+        </div>
       </div>
     </div>
   );
-}   
+}

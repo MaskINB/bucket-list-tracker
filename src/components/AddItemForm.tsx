@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { client } from '@/src/lib/dataClient';
+import ImageUpload from '@/src/components/ImageUpload';
 
 interface AddItemFormProps {
   onItemAdded: () => void;
@@ -16,6 +17,7 @@ interface FormData {
   category: Category;
   priority: Priority;
   targetDate: string;
+  imageKey: string;
 }
 
 export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
@@ -28,9 +30,12 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
     category: 'OTHER',
     priority: 'MEDIUM',
     targetDate: '',
+    imageKey: '',
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -42,6 +47,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
         category: formData.category,
         priority: formData.priority,
         targetDate: formData.targetDate || null,
+        imageKey: formData.imageKey || null,
         isCompleted: false,
       });
 
@@ -51,6 +57,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
         category: 'OTHER',
         priority: 'MEDIUM',
         targetDate: '',
+        imageKey: '',
       });
       setIsOpen(false);
       onItemAdded();
@@ -78,7 +85,9 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
 
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">➕ New Bucket List Item</h3>
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+        ➕ New Bucket List Item
+      </h3>
 
       {error && (
         <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
@@ -87,6 +96,23 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Image Upload */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Image (optional)
+          </label>
+          <ImageUpload
+            existingImageKey={formData.imageKey || null}
+            onImageUploaded={(key) =>
+              setFormData({ ...formData, imageKey: key })
+            }
+            onImageRemoved={() =>
+              setFormData({ ...formData, imageKey: '' })
+            }
+          />
+        </div>
+
+        {/* Title */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Title *
@@ -94,26 +120,32 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
           <input
             type="text"
             value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="e.g. Visit Japan"
             required
           />
         </div>
 
+        {/* Description */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Description
           </label>
           <textarea
             value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Describe your goal..."
             rows={3}
           />
         </div>
 
+        {/* Category & Priority */}
         <div className="flex gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -122,7 +154,10 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             <select
               value={formData.category}
               onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value as Category })
+                setFormData({
+                  ...formData,
+                  category: e.target.value as Category,
+                })
               }
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
@@ -143,17 +178,21 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             <select
               value={formData.priority}
               onChange={(e) =>
-                setFormData({ ...formData, priority: e.target.value as Priority })
+                setFormData({
+                  ...formData,
+                  priority: e.target.value as Priority,
+                })
               }
               className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
-              <option value="LOW">Low</option>
-              <option value="MEDIUM">Medium</option>
-              <option value="HIGH">High</option>
+              <option value="LOW">🟢 Low</option>
+              <option value="MEDIUM">🟡 Medium</option>
+              <option value="HIGH">🔴 High</option>
             </select>
           </div>
         </div>
 
+        {/* Target Date */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Target Date
@@ -161,23 +200,26 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
           <input
             type="date"
             value={formData.targetDate}
-            onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, targetDate: e.target.value })
+            }
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
-        <div className="flex gap-3 pt-2">
+        {/* Buttons */}
+        <div className="flex gap-3">
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600 disabled:opacity-50"
+            className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
           >
-            {loading ? 'Saving...' : 'Create Item'}
+            {loading ? 'Adding...' : 'Add Item'}
           </button>
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+            className="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-200 transition"
           >
             Cancel
           </button>
