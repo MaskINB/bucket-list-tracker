@@ -67,28 +67,28 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">Loading your bucket list...</p>
+        <p className="text-[#a0aec0]">Loading your bucket list...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f1419] via-[#1a1f2e] to-[#0f1419]">
       <Navbar user={user ?? undefined} />
 
       <main className="max-w-2xl mx-auto px-4 py-8">
 
         {/* Progress bar */}
-        <div className="bg-white rounded-2xl shadow-sm p-5 mb-6">
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="font-semibold text-gray-700">Your Progress</h2>
-            <span className="text-sm text-gray-500">
+        <div className="bg-[#1e2335] border border-[#2d3748] rounded-xl shadow-lg p-6 mb-6">
+          <div className="flex justify-between items-center mb-3">
+            <h2 className="font-semibold text-[#e0e7ff]">Your Progress</h2>
+            <span className="text-sm text-[#a0aec0]">
               {completedCount} / {totalCount} completed
             </span>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-3">
+          <div className="w-full bg-[#0f1419] rounded-full h-3 overflow-hidden">
             <div
-              className="bg-blue-500 h-3 rounded-full transition-all"
+              className="h-3 rounded-full bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] transition-all"
               style={{
                 width: totalCount > 0
                   ? `${(completedCount / totalCount) * 100}%`
@@ -107,10 +107,10 @@ export default function DashboardPage() {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
                 filter === f
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-500 hover:bg-gray-100'
+                  ? 'bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white shadow-lg shadow-[#6366f1]/30'
+                  : 'bg-[#1e2335] border border-[#2d3748] text-[#a0aec0] hover:bg-[#2d3748]'
               }`}
             >
               {f}
@@ -121,9 +121,9 @@ export default function DashboardPage() {
         {/* Items list */}
         <div className="space-y-3">
           {filteredItems.length === 0 ? (
-            <div className="text-center py-12 text-gray-400">
+            <div className="text-center py-12 text-[#a0aec0]">
               <p className="text-4xl mb-3">🪣</p>
-              <p className="font-medium">No items yet!</p>
+              <p className="font-medium text-[#e0e7ff]">No items yet!</p>
               <p className="text-sm">Add your first bucket list item above.</p>
             </div>
           ) : (

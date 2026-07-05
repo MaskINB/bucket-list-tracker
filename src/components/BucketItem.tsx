@@ -30,9 +30,9 @@ const categoryEmoji: Record<string, string> = {
 };
 
 const priorityColor: Record<string, string> = {
-  LOW: "bg-green-100 text-green-700",
-  MEDIUM: "bg-yellow-100 text-yellow-700",
-  HIGH: "bg-red-100 text-red-700",
+  LOW: "bg-emerald-900/30 text-emerald-400 border border-emerald-800",
+  MEDIUM: "bg-amber-900/30 text-amber-400 border border-amber-800",
+  HIGH: "bg-red-900/30 text-red-400 border border-red-800",
 };
 
 export default function BucketItem({ item, onUpdate }: BucketItemProps) {
@@ -83,8 +83,8 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
 
   return (
     <div
-      className={`bg-white rounded-2xl shadow-sm border overflow-hidden transition ${
-        item.isCompleted ? "opacity-60" : ""
+      className={`bg-[#1e2335] border border-[#2d3748] rounded-xl shadow-lg overflow-hidden transition ${
+        item.isCompleted ? "opacity-50" : ""
       }`}
     >
       {/* Item image if exists */}
@@ -98,7 +98,7 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
             unoptimized
           />
           {item.isCompleted && (
-            <div className="absolute inset-0 bg-green-500 bg-opacity-20 flex items-center justify-center">
+            <div className="absolute inset-0 bg-emerald-500 bg-opacity-30 flex items-center justify-center">
               <span className="text-4xl">✅</span>
             </div>
           )}
@@ -114,8 +114,8 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
               disabled={loading}
               className={`mt-1 w-6 h-6 rounded-full border-2 shrink-0 flex items-center justify-center transition ${
                 item.isCompleted
-                  ? "bg-green-500 border-green-500 text-white"
-                  : "border-gray-300 hover:border-green-400"
+                  ? "bg-emerald-500 border-emerald-500 text-white"
+                  : "border-[#2d3748] hover:border-[#6366f1]"
               }`}
             >
               {item.isCompleted && "✓"}
@@ -127,15 +127,15 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
                   {categoryEmoji[item.category ?? "OTHER"]}
                 </span>
                 <h3
-                  className={`font-semibold text-gray-800 ${
-                    item.isCompleted ? "line-through text-gray-400" : ""
+                  className={`font-semibold text-[#e0e7ff] ${
+                    item.isCompleted ? "line-through text-[#6b7280]" : ""
                   }`}
                 >
                   {item.title}
                 </h3>
                 {item.priority && (
                   <span
-                    className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                    className={`text-xs px-2.5 py-1 rounded-full font-medium ${
                       priorityColor[item.priority]
                     }`}
                   >
@@ -145,11 +145,11 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
               </div>
 
               {item.description && (
-                <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+                <p className="text-sm text-[#a0aec0] mt-1">{item.description}</p>
               )}
 
               {item.targetDate && (
-                <p className="text-xs text-gray-400 mt-2">
+                <p className="text-xs text-[#6b7280] mt-2">
                   🗓️ Target: {item.targetDate}
                 </p>
               )}
@@ -160,7 +160,7 @@ export default function BucketItem({ item, onUpdate }: BucketItemProps) {
           <button
             onClick={handleDelete}
             disabled={loading}
-            className="text-gray-300 hover:text-red-400 transition text-xl shrink-0"
+            className="text-[#6b7280] hover:text-red-400 transition text-2xl shrink-0"
           >
             ×
           </button>

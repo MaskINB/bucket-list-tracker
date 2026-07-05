@@ -76,7 +76,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full border-2 border-dashed border-blue-300 rounded-2xl p-6 text-blue-400 hover:border-blue-500 hover:text-blue-600 transition text-center"
+        className="w-full border-2 border-dashed border-[#6366f1] rounded-xl p-6 text-[#a0aec0] hover:border-[#8b5cf6] hover:text-[#e0e7ff] transition text-center font-medium"
       >
         + Add New Bucket List Item
       </button>
@@ -84,13 +84,13 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+    <div className="bg-[#1e2335] border border-[#2d3748] rounded-xl shadow-lg p-6 mb-6">
+      <h3 className="text-lg font-semibold text-[#e0e7ff] mb-4">
         ➕ New Bucket List Item
       </h3>
 
       {error && (
-        <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm">
+        <div className="bg-red-900/20 text-red-400 p-3 rounded-lg mb-4 text-sm border border-red-800">
           {error}
         </div>
       )}
@@ -98,7 +98,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Image Upload */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[#a0aec0] mb-2">
             Image (optional)
           </label>
           <ImageUpload
@@ -114,7 +114,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
 
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[#a0aec0] mb-2">
             Title *
           </label>
           <input
@@ -123,7 +123,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-[#0f1419] border border-[#2d3748] rounded-lg px-4 py-2.5 text-[#e0e7ff] focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:border-transparent transition"
             placeholder="e.g. Visit Japan"
             required
           />
@@ -131,7 +131,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[#a0aec0] mb-2">
             Description
           </label>
           <textarea
@@ -139,16 +139,16 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-[#0f1419] border border-[#2d3748] rounded-lg px-4 py-2.5 text-[#e0e7ff] focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:border-transparent transition"
             placeholder="Describe your goal..."
             rows={3}
           />
         </div>
 
         {/* Category & Priority */}
-        <div className="flex gap-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-[#a0aec0] mb-2">
               Category
             </label>
             <select
@@ -159,7 +159,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
                   category: e.target.value as Category,
                 })
               }
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-[#0f1419] border border-[#2d3748] rounded-lg px-4 py-2.5 text-[#e0e7ff] focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:border-transparent transition"
             >
               <option value="TRAVEL">✈️ Travel</option>
               <option value="ADVENTURE">🏔️ Adventure</option>
@@ -171,8 +171,8 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             </select>
           </div>
 
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div>
+            <label className="block text-sm font-medium text-[#a0aec0] mb-2">
               Priority
             </label>
             <select
@@ -183,7 +183,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
                   priority: e.target.value as Priority,
                 })
               }
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full bg-[#0f1419] border border-[#2d3748] rounded-lg px-4 py-2.5 text-[#e0e7ff] focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:border-transparent transition"
             >
               <option value="LOW">🟢 Low</option>
               <option value="MEDIUM">🟡 Medium</option>
@@ -194,7 +194,7 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
 
         {/* Target Date */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-[#a0aec0] mb-2">
             Target Date
           </label>
           <input
@@ -203,23 +203,23 @@ export default function AddItemForm({ onItemAdded }: AddItemFormProps) {
             onChange={(e) =>
               setFormData({ ...formData, targetDate: e.target.value })
             }
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full bg-[#0f1419] border border-[#2d3748] rounded-lg px-4 py-2.5 text-[#e0e7ff] focus:outline-none focus:ring-2 focus:ring-[#6366f1] focus:border-transparent transition"
           />
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 pt-2">
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50"
+            className="flex-1 bg-gradient-to-r from-[#6366f1] to-[#8b5cf6] text-white py-2.5 rounded-lg font-semibold hover:shadow-lg hover:shadow-[#6366f1]/30 transition disabled:opacity-50"
           >
             {loading ? 'Adding...' : 'Add Item'}
           </button>
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-200 transition"
+            className="flex-1 bg-[#0f1419] border border-[#2d3748] text-[#a0aec0] py-2.5 rounded-lg font-semibold hover:bg-[#2d3748] transition"
           >
             Cancel
           </button>
