@@ -20,7 +20,8 @@ Built by an undergraduate student as a hands-on learning project. Every layer wa
 ## 🏗️ Architecture
 
 ```
-![Architecture Diagram](/amplify/images/architecture.png)
+![Architecture Diagram](/images/architecture.png)
+```
 
 ---
 
@@ -114,11 +115,7 @@ bucket-list-tracker/
 └── package.json                    ← Dependencies
 ```
 
----
-
 ## 🚀 Getting Started
-
-### Prerequisites
 
 Make sure you have these installed:
 
