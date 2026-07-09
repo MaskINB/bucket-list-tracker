@@ -12,35 +12,15 @@ Built by an undergraduate student as a hands-on learning project. Every layer wa
 >
 > Full source code, architecture, and documentation are available below.
 
-📝 **Full Article on Medium** → [Read the complete step-by-step guide](#)
+📝 **Full Article on Medium** → [Read the complete step-by-step guide](https://medium.com/@induwaranethmal1322/from-local-to-cloud-how-i-built-and-deployed-a-full-stack-aws-application-as-an-undergraduate-c03de1686afb)
 💻 **GitHub Repository** → [MaskINB/bucket-list-tracker](https://github.com/MaskINB/bucket-list-tracker)
-
----
-
-## 📸 Screenshots
-
-> Add your screenshots here after taking them
->
-> | Login Page | Dashboard | Add Item Form |
-> |-----------|-----------|--------------|
-> | ![Login]() | ![Dashboard]() | ![Add Item]() |
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-Developer → Git Push → GitHub → AWS Amplify (CI/CD)
-                                      ↓
-                              Next.js App (SSR)
-                                      ↓
-                    ┌─────────────────┼─────────────────┐
-                    ↓                 ↓                 ↓
-              Cognito Auth      AppSync API          S3 Storage
-                                      ↓
-                                 DynamoDB
-                                      ↑
-User → Browser → Amplify URL → Next.js → All AWS Services
+![Architecture Diagram](images/architecture.png)
 ```
 
 ---
@@ -351,42 +331,6 @@ BucketItem {
 }
 ```
 
----
-
-## 💰 AWS Cost
-
-This project runs entirely within the **AWS Free Tier**:
-
-| Service | Free Tier Limit | Typical Usage |
-|---------|----------------|---------------|
-| Amplify Hosting | 1000 build mins/month | ~15 mins |
-| Amazon Cognito | 50,000 MAU free | < 10 users |
-| AWS AppSync | 250,000 requests/month | < 1000 |
-| Amazon DynamoDB | 25GB + 200M requests | < 1MB |
-| Amazon S3 | 5GB storage | < 50MB |
-
-**Estimated monthly cost: $0.00** for a learning project.
-
-> ⚠️ Always set up a billing alert in AWS Console → Budgets to avoid unexpected charges.
-
----
-
-## ⏱️ Build Time
-
-| Phase | Time |
-|-------|------|
-| Next.js + Docker setup | 2 hours |
-| AWS Amplify configuration | 3 hours |
-| Authentication (Cognito) | 2 hours |
-| GraphQL API + DynamoDB | 4 hours |
-| S3 image upload | 3 hours |
-| UI design (Tailwind) | 5 hours |
-| Deployment + CI/CD | 4 hours |
-| Debugging all errors | 6 hours |
-| **Total** | **~29 hours** |
-
----
-
 ## 🧠 Key Learnings
 
 ```
@@ -406,8 +350,8 @@ This project runs entirely within the **AWS Free Tier**:
 
 | Project | Tech Stack | Article |
 |---------|-----------|---------|
-| CI/CD Pipeline with GitHub Actions | Docker + GitHub Actions + AWS EC2 | [Read on Medium](#) |
-| Bucket List Tracker (this project) | Next.js + AWS Amplify + AppSync + DynamoDB + S3 | [Read on Medium](#) |
+| CI/CD Pipeline with GitHub Actions | Docker + GitHub Actions + AWS EC2 |
+| Bucket List Tracker (this project) | Next.js + AWS Amplify + AppSync + DynamoDB + S3 | [Read on Medium](https://medium.com/@induwaranethmal1322/from-local-to-cloud-how-i-built-and-deployed-a-full-stack-aws-application-as-an-undergraduate-c03de1686afb) |
 
 ---
 
