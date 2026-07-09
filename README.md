@@ -19,6 +19,18 @@ Built by an undergraduate student as a hands-on learning project. Every layer wa
 
 ## 🏗️ Architecture
 
+Developer → Git Push → GitHub → AWS Amplify (CI/CD)
+                                      ↓
+                              Next.js App (SSR)
+                                      ↓
+                    ┌─────────────────┼─────────────────┐
+                    ↓                 ↓                 ↓
+              Cognito Auth      AppSync API          S3 Storage
+                                      ↓
+                                 DynamoDB
+                                      ↑
+User → Browser → Amplify URL → Next.js → All AWS Services
+
 <img src="images/architecture.png" alt="Architecture Diagram" width="100%" />
 
 ---
