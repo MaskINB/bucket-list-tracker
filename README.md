@@ -422,25 +422,6 @@ This project runs entirely within the **AWS Free Tier**:
 
 ---
 
-## 👨‍💻 Author
-
-**Induwara Nethmal**
-Undergraduate Student | Learning Cloud Computing by Building Real Projects
-
-- 📝 Medium: [Your Medium URL](#)
-- 💼 LinkedIn: [Your LinkedIn URL](#)
-- 🐙 GitHub: [@MaskINB](https://github.com/MaskINB)
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-Feel free to use this project for your own learning!
-
----
-
 <div align="center">
 
 **⭐ If this project helped you learn something, please give it a star! ⭐**
