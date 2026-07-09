@@ -19,6 +19,7 @@ Built by an undergraduate student as a hands-on learning project. Every layer wa
 
 ## 🏗️ Architecture
 
+```
 Developer → Git Push → GitHub → AWS Amplify (CI/CD)
                                       ↓
                               Next.js App (SSR)
@@ -31,11 +32,10 @@ Developer → Git Push → GitHub → AWS Amplify (CI/CD)
                                       ↑
 User → Browser → Amplify URL → Next.js → All AWS Services
 
----
+```
+![Architecture Diagram](images/architecture.png)
 
-<img src="images/architecture.png" alt="Architecture Diagram" width="100%" />
-
----
+```
 
 ## ✨ Features
 
@@ -126,6 +126,8 @@ bucket-list-tracker/
 ├── tsconfig.json                   ← TypeScript configuration
 └── package.json                    ← Dependencies
 ```
+
+---
 
 ## 🚀 Getting Started
 
