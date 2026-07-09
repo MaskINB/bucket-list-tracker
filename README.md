@@ -31,9 +31,9 @@ Developer → Git Push → GitHub → AWS Amplify (CI/CD)
                                  DynamoDB
                                       ↑
 User → Browser → Amplify URL → Next.js → All AWS Services
-
 ```
 ![Architecture Diagram](images/architecture.png)
+```
 
 ```
 
