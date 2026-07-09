@@ -19,7 +19,7 @@ Built by an undergraduate student as a hands-on learning project. Every layer wa
 
 ## 🏗️ Architecture
 
-![Architecture Diagram](images/architecture.png)
+<img src="images/architecture.png" alt="Architecture Diagram" width="100%" />
 
 ---
 
